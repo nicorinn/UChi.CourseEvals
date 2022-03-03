@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UChi.CourseEvals.Api", "UChi.CourseEvals.Api\UChi.CourseEvals.Api.csproj", "{E7ADAF18-9574-41F0-933F-CC9F4A2EEC1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UChi.CourseEvals.Domain", "UChi.CourseEvals.Domain\UChi.CourseEvals.Domain.csproj", "{BBFE4507-2438-489F-ACB1-3AE51FCB806B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UChi.CourseEvals.Data", "UChi.CourseEvals.Data\UChi.CourseEvals.Data.csproj", "{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{E7ADAF18-9574-41F0-933F-CC9F4A2EEC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7ADAF18-9574-41F0-933F-CC9F4A2EEC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7ADAF18-9574-41F0-933F-CC9F4A2EEC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBFE4507-2438-489F-ACB1-3AE51FCB806B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBFE4507-2438-489F-ACB1-3AE51FCB806B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBFE4507-2438-489F-ACB1-3AE51FCB806B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBFE4507-2438-489F-ACB1-3AE51FCB806B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
