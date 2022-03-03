@@ -23,9 +23,24 @@ namespace UChi.CourseEvals.Api.Controllers
             var courses = await _dbContext.Courses.ToListAsync();
             return Ok(courses);
         }
+        
+        [HttpGet("{id}", Name = "Course")]
+        public async Task<IActionResult> Course(int id)
+        {
+            var course = await _dbContext
+                .Courses
+                .Include(course => course.Sections)
+                .FirstOrDefaultAsync(course => course.Id == id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return Ok(course);
+        }
 
         // GET: api/Home/Professors/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "Professors")]
         public async Task<IActionResult> Professors(int id)
         {
             var prof = await _dbContext.FindAsync<Professor>(id);

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using UChi.CourseEvals.Domain.Common;
 using UChi.CourseEvals.Domain.Enums;
 
