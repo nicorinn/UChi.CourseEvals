@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UChi.CourseEvals.Data;
@@ -11,9 +12,10 @@ using UChi.CourseEvals.Data;
 namespace UChi.CourseEvals.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309060548_MultipleCourseNumbers")]
+    partial class MultipleCourseNumbers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,10 +52,6 @@ namespace UChi.CourseEvals.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("creation_date");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text")
@@ -61,7 +59,11 @@ namespace UChi.CourseEvals.Data.Migrations
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("timestamp without time zone")
-                        .HasColumnName("expiration_date");
+                        .HasColumnName("expires");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("issued");
 
                     b.Property<string>("Key")
                         .IsRequired()
@@ -85,9 +87,9 @@ namespace UChi.CourseEvals.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 3, 9, 0, 10, 31, 570, DateTimeKind.Local).AddTicks(9720),
                             Email = "test@test.com",
-                            ExpirationDate = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Expires = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Issued = new DateTime(2022, 3, 9, 0, 5, 47, 866, DateTimeKind.Local).AddTicks(4830),
                             Key = "43ae2c82-dbf7-4e74-a5dc-d9d45783cc6e",
                             RequestCount = 0L
                         });

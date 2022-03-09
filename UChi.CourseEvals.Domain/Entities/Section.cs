@@ -7,8 +7,12 @@ namespace UChi.CourseEvals.Domain.Entities;
 
 public class Section : BaseEntity
 {
+    public Section()
+    {
+        Professors = new List<Professor>();
+    }
+    
     public int CourseId { get; set; }
-    public int ProfessorId { get; set; }
     public int Number { get; set; }
     public int Year { get; set; }
     public Quarter Quarter { get; set; }
@@ -17,5 +21,5 @@ public class Section : BaseEntity
     public double Sentiment { get; set; }
 
     public Course? Course { get; set; }
-    public Professor? Professor { get; set; }
+    public ICollection<Professor> Professors { get; set; }
 }
