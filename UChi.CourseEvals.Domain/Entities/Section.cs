@@ -19,6 +19,7 @@ public class Section : BaseEntity
     [Column(TypeName = "jsonb")]
     public string? ChartData { get; set; }
     public double Sentiment { get; set; }
+    public bool IsVirtual { get; set; }
 
     public Course? Course { get; set; }
     public ICollection<Professor> Professors { get; set; }

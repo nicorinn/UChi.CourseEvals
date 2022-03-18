@@ -54,6 +54,7 @@ public class AppDbContext : DbContext
                 Quarter = Quarter.Winter,
                 Sentiment = 0.8,
                 ChartData = "{}",
+                IsVirtual = false
             },
             new Section
             {
@@ -64,6 +65,7 @@ public class AppDbContext : DbContext
                 Quarter = Quarter.Winter,
                 Sentiment = 0.8,
                 ChartData = "{}",
+                IsVirtual = false
             });
 
         modelBuilder.Entity<Professor>().HasData(
