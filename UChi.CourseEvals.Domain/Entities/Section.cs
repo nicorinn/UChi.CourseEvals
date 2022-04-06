@@ -9,7 +9,7 @@ public class Section : BaseEntity
 {
     public Section()
     {
-        Professors = new List<Professor>();
+        Instructors = new List<Instructor>();
     }
     
     public int CourseId { get; set; }
@@ -19,8 +19,10 @@ public class Section : BaseEntity
     [Column(TypeName = "jsonb")]
     public string? ChartData { get; set; }
     public double Sentiment { get; set; }
+    
+    public int? HoursWorked { get; set; }
     public bool IsVirtual { get; set; }
 
     public Course? Course { get; set; }
-    public ICollection<Professor> Professors { get; set; }
+    public ICollection<Instructor> Instructors { get; set; }
 }

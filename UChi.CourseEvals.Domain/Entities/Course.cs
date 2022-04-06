@@ -12,10 +12,13 @@ public class Course : BaseEntity
     }
     
     public string Title { get; set; } = string.Empty;
-    public double AverageSentiment { get; set; }
-    [Column(TypeName = "jsonb")]
-    public string? ChartData { get; set; }
-
     public ICollection<CourseNumber> CourseNumbers { get; set; }
     public ICollection<Section> Sections { get; set; }
+
+    public bool HasCourseNumber(string courseNumber)
+    {
+        var courseNum = CourseNumbers
+            .FirstOrDefault(cn => cn.GetDepartmentAndNumber() == courseNumber);
+        return courseNum != null;
+    }
 }

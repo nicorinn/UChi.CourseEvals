@@ -2,11 +2,17 @@ using UChi.CourseEvals.Domain.Common;
 
 namespace UChi.CourseEvals.Domain.Entities;
 
-public class Professor : BaseEntity
+public class Instructor : BaseEntity
 {
-    public Professor()
+    public Instructor()
     {
         Sections = new List<Section>();
+    }
+
+    public Instructor(string name)
+    {
+        Sections = new List<Section>();
+        Name = name;
     }
 
     public string Name { get; set; } = string.Empty;
