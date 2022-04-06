@@ -173,7 +173,7 @@ namespace UChi.CourseEvals.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("UChi.CourseEvals.Domain.Entities.Professor", b =>
+            modelBuilder.Entity("UChi.CourseEvals.Domain.Entities.Instructor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -277,7 +277,7 @@ namespace UChi.CourseEvals.Data.Migrations
 
             modelBuilder.Entity("ProfessorSection", b =>
                 {
-                    b.HasOne("UChi.CourseEvals.Domain.Entities.Professor", null)
+                    b.HasOne("UChi.CourseEvals.Domain.Entities.Instructor", null)
                         .WithMany()
                         .HasForeignKey("ProfessorsId")
                         .OnDelete(DeleteBehavior.Cascade)
