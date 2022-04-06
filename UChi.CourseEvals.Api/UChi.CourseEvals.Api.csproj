@@ -20,8 +20,4 @@
       <ProjectReference Include="..\UChi.CourseEvals.Data\UChi.CourseEvals.Data.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers" />
-    </ItemGroup>
-
 </Project>
