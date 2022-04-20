@@ -37,36 +37,42 @@ public class SectionsService : ISectionsService
 
         if (course == null)
         {
-           await _coursesService.AddCourse(sectionModel);
-           course = await _coursesService
-               .FindByCourseNumber(sectionModel.CourseNumbers.First());
+           course = await _coursesService.AddCourse(sectionModel);
         }
 
         var newSection = Mapper.NewSectionModelToSection(sectionModel);
         newSection.CourseId = course.Id;
+
+        if (SectionAlreadyExists(newSection, course))
+        {
+            throw new Exception("Section already exists.");
+        }
+        
         await AddInstructorsToSection(newSection, sectionModel.Instructors);
         _dbContext.Add(newSection);
 
         await _dbContext.SaveChangesAsync();
-        return await _dbContext.Sections.FindAsync(newSection);
+        return newSection;
     }
 
     private async Task AddInstructorsToSection(Section section, IEnumerable<string> names)
     {
         foreach (string name in names)
         {
-            var instructor = await _instructorService.FindByName(name);
-            if (instructor != null)
+            var instructor = await _instructorService.FindByName(name) ?? new Instructor
             {
-                section.Instructors.Add(instructor);
-            }
-            else
-            {
-                var newInstructor = await _instructorService.AddInstructor(name);
-                section.Instructors.Add(newInstructor);
-            }
+                Name = name,
+                Sections = new List<Section>()
+            };
+            section.Instructors.Add(instructor);
         }
     }
+
+    private bool SectionAlreadyExists(Section section, Course course)
+    {
+        return course.Sections
+            .Any(s => SameSection(s, section));
+    } 
 
     private bool SameSection(Section section1, Section section2)
     {

@@ -27,6 +27,8 @@ public class CourseNumber : BaseEntity
     public string Department { get; set; } = string.Empty;
     public int Number { get; set; }
 
+    public Course Course { get; set; }
+
     public string GetDepartmentAndNumber()
     {
         return string.Concat(Department, " ", Number);

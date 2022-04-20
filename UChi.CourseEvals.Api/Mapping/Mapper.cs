@@ -25,6 +25,7 @@ public static class Mapper
     {
         var sectionModel = new SectionModel
         {
+            Id = section.Id,
             Number = section.Number,
             Quarter = QuarterToString(section.Quarter),
             Year = section.Year,
@@ -58,6 +59,7 @@ public static class Mapper
     {
         var instructorModel = new InstructorModel
         {
+            Id = instructor.Id,
             Name = instructor.Name,
             Sections = instructor.Sections.Select(SectionToSectionModel).ToList()
         };

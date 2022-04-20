@@ -26,17 +26,5 @@ namespace UChi.CourseEvals.Api.Controllers
                 .ToListAsync();
             return Ok(courses);
         }
-
-        // GET: api/Home/Instructors/5
-        [HttpGet("{id}", Name = "Instructors")]
-        public async Task<IActionResult> Instructors(int id)
-        {
-            var prof = await _dbContext.FindAsync<Instructor>(id);
-            if (prof == null)
-            {
-                return NotFound();
-            }
-            return Ok(prof);
-        }
     }
 }
