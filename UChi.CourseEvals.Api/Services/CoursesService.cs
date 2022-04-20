@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
 using UChi.CourseEvals.Api.Mapping;
@@ -48,13 +49,42 @@ public class CoursesService : ICoursesService
         return Mapper.CourseToCourseModel(course);
     }
 
+    // TODO Investigate whether to query by coursenumber first
     public async Task<Course?> FindByCourseNumber(string courseNumber)
     {
+        var splitCourseNumber = courseNumber.Split(' ');
+        if (splitCourseNumber.Length < 2)
+        {
+            return null;
+        }
+        var department = splitCourseNumber[0];
+        var number = splitCourseNumber[1];
         var course = await _dbContext.Courses
             .Include(c => c.CourseNumbers)
-            .FirstOrDefaultAsync(c => c.HasCourseNumber(courseNumber));
+            .Include(c => c.Sections)
+            .FirstOrDefaultAsync(c => 
+                c.CourseNumbers.Any(cn => 
+                    cn.Department == department && cn.Number.ToString() == number));
 
         return course;
+    }
+
+    // TODO Improve search
+    public async Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString)
+    {
+        // var searchTerm = queryString.ToLower();
+        // var results = await _dbContext.Courses
+        //     .Include(c => c.CourseNumbers)
+        //     .Include(c => c.Sections)
+        //     .ThenInclude(c => c.Instructors)
+        //     .Where(c => 
+        //         c.Title.ToLower().Contains(searchTerm)
+        //         || c.Sections.Any(s => s.Instructors
+        //             .Any(i => i.Name.ToLower().Contains(searchTerm)))
+        //         || c.CourseNumbers.Contains()
+        //     )
+        //     .ToListAsync();
+        return default;
     }
 
     public async Task AddCourse(NewSectionModel sectionModel)
@@ -66,14 +96,11 @@ public class CoursesService : ICoursesService
             CourseNumbers = new List<CourseNumber>()
         };
 
+        course.CourseNumbers = sectionModel.CourseNumbers
+            .Select(courseNumberString => new CourseNumber(courseNumberString))
+            .ToList();
+
         _dbContext.Courses.Add(course);
-
-        foreach (var courseNumberString in sectionModel.CourseNumbers)
-        {
-            var newCourseNumber = new CourseNumber(courseNumberString, course.Id);
-            _dbContext.CourseNumbers.Add(newCourseNumber);
-        }
-
         await _dbContext.SaveChangesAsync();
     }
 }

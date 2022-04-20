@@ -25,10 +25,10 @@ public class CoursesController : ControllerBase
         return Ok(course);
     }
 
-    [HttpGet("{courseNumber:alpha}")]
-    public async Task<IActionResult> GetCourseByNumber(string courseNumber)
+    [HttpGet]
+    public async Task<IActionResult> SearchCourses([FromQuery]string queryString)
     {
-        var course = await _coursesService.FindByCourseNumber(courseNumber);
+        var course = await _coursesService.SearchByQueryString(queryString);
         if (course == null)
         {
             return NotFound();

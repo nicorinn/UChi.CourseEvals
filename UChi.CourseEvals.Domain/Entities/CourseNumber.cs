@@ -7,7 +7,7 @@ public class CourseNumber : BaseEntity
     public CourseNumber()
     { }
 
-    public CourseNumber(string deptAndNumString, int courseId)
+    public CourseNumber(string deptAndNumString)
     {
         if (deptAndNumString == null)
         {
@@ -21,8 +21,6 @@ public class CourseNumber : BaseEntity
         }
         Department = splitDeptAndNum[0];
         Number = int.Parse(splitDeptAndNum[1]);
-        CourseId = courseId;
-        return;
     }
     
     public int CourseId { get; set; }

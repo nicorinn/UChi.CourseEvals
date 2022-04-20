@@ -11,11 +11,15 @@ public class SectionsService : ISectionsService
 {
     private readonly AppDbContext _dbContext;
     private readonly ICoursesService _coursesService;
+    private readonly IInstructorService _instructorService;
 
-    public SectionsService(AppDbContext dbContext, ICoursesService coursesService)
+    public SectionsService(AppDbContext dbContext, 
+        ICoursesService coursesService,
+        IInstructorService instructorService)
     {
         _dbContext = dbContext;
         _coursesService = coursesService;
+        _instructorService = instructorService;
     }
 
     public async Task<SectionModel?> GetSectionById(int id)
@@ -40,10 +44,28 @@ public class SectionsService : ISectionsService
 
         var newSection = Mapper.NewSectionModelToSection(sectionModel);
         newSection.CourseId = course.Id;
+        await AddInstructorsToSection(newSection, sectionModel.Instructors);
         _dbContext.Add(newSection);
 
         await _dbContext.SaveChangesAsync();
         return await _dbContext.Sections.FindAsync(newSection);
+    }
+
+    private async Task AddInstructorsToSection(Section section, IEnumerable<string> names)
+    {
+        foreach (string name in names)
+        {
+            var instructor = await _instructorService.FindByName(name);
+            if (instructor != null)
+            {
+                section.Instructors.Add(instructor);
+            }
+            else
+            {
+                var newInstructor = await _instructorService.AddInstructor(name);
+                section.Instructors.Add(newInstructor);
+            }
+        }
     }
 
     private bool SameSection(Section section1, Section section2)

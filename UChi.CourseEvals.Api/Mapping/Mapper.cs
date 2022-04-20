@@ -54,6 +54,27 @@ public static class Mapper
         return courseModel;
     }
 
+    public static InstructorModel InstructorToInstructorModel(Instructor instructor)
+    {
+        var instructorModel = new InstructorModel
+        {
+            Name = instructor.Name,
+            Sections = instructor.Sections.Select(SectionToSectionModel).ToList()
+        };
+
+        return instructorModel;
+    }
+
+    public static Instructor InstructorToInstructorModel(InstructorModel instructorModel)
+    {
+        var instructor = new Instructor
+        {
+            Name = instructorModel.Name,
+        };
+
+        return instructor;
+    }
+
     private static Quarter StringToQuarter(string quarterString)
     {
         return quarterString switch

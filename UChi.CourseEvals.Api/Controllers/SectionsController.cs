@@ -30,6 +30,12 @@ public class SectionsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Section([FromBody] NewSectionModel sectionModel)
     {
+        var newSection = await _sectionsService.AddSection(sectionModel);
+        if (newSection == null)
+        {
+            return BadRequest();
+        }
+
         return Ok(sectionModel);
     }
 }
