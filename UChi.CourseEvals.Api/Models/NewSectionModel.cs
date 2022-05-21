@@ -20,6 +20,8 @@ public class NewSectionModel
     public int? HoursWorked { get; set; }
     [BindProperty(Name = "is_virtual")]
     public bool IsVirtual { get; set; }
+    public int EnrolledCount { get; set; }
+    public int RespondentCount { get; set; }
     [BindProperty(Name = "title")]
     public string Title { get; set; } = string.Empty;
     public ICollection<string> CourseNumbers { get; set; }

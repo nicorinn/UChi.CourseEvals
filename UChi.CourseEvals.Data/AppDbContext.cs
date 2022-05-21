@@ -16,75 +16,8 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
-            .UseNpgsql()
+            .UseNpgsql("Host=localhost;Database=uchi_evals;Username=uchi_evals_server;Include Error Detail=true")
             .UseSnakeCaseNamingConvention();
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Course>().HasData(
-            new Course
-            {
-                Id = 1,
-                Title = "Honors Introduction to Computer Science II",
-            });
-        
-        modelBuilder.Entity<CourseNumber>().HasData(
-            new CourseNumber
-            {
-                Id = 1,
-                CourseId = 1,
-                Department = "CMSC",
-                Number = 16200
-            },
-            new CourseNumber
-            {
-                Id = 2,
-                CourseId = 1,
-                Department = "TEST",
-                Number = 16200
-            });
-
-        modelBuilder.Entity<Section>().HasData(
-            new Section
-            {
-                Id = 1,
-                CourseId = 1,
-                Number = 1,
-                Year = 2022,
-                Quarter = Quarter.Winter,
-                Sentiment = 0.8,
-                HoursWorked = 7,
-                ChartData = "{}",
-                IsVirtual = false
-            },
-            new Section
-            {
-                Id = 2,
-                CourseId = 1,
-                Number = 2,
-                Year = 2022,
-                Quarter = Quarter.Winter,
-                Sentiment = 0.8,
-                HoursWorked = 8,
-                ChartData = "{}",
-                IsVirtual = false
-            });
-
-        modelBuilder.Entity<Instructor>().HasData(
-            new Instructor {Id = 1, Name = "Fred Chong"}, new Instructor {Id = 2, Name = "Hank Hoffmann"});
-
-        modelBuilder.Entity<ApiKey>().HasData(new ApiKey
-        {
-            Id = 1,
-            Key = "43ae2c82-dbf7-4e74-a5dc-d9d45783cc6e",
-            Email = "test@test.com",
-            Scope = ApiKeyScope.ReadAndWrite,
-            ExpirationDate = new DateTime(2022, 05, 01),
-            CreationDate = DateTime.Now,
-            LastUsed = null,
-            RequestCount = 0
-        });
-    }
 
     public DbSet<Course> Courses { get; set; }
     public DbSet<Section> Sections { get; set; }

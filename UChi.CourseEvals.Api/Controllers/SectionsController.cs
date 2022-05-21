@@ -4,7 +4,7 @@ using UChi.CourseEvals.Api.Services.Interfaces;
 
 namespace UChi.CourseEvals.Api.Controllers;
 
-[Route("api/[controller]/[action]")]
+[Route("api/[controller]/")]
 [ApiController]
 public class SectionsController : ControllerBase
 {
@@ -27,7 +27,7 @@ public class SectionsController : ControllerBase
         return Ok(section);
     }
 
-    [HttpPost]
+    [HttpPost(Name = "section")]
     public async Task<IActionResult> Section([FromBody] NewSectionModel sectionModel)
     {
         var newSection = await _sectionsService.AddSection(sectionModel);

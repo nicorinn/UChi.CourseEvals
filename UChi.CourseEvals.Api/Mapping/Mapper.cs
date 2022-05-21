@@ -15,6 +15,8 @@ public static class Mapper
             Year = sectionModel.Year,
             Sentiment = sectionModel.Sentiment,
             HoursWorked = sectionModel.HoursWorked,
+            EnrolledCount = sectionModel.EnrolledCount,
+            RespondentCount = sectionModel.RespondentCount,
             IsVirtual = sectionModel.IsVirtual,
             ChartData = sectionModel.ChartData
         };
@@ -32,6 +34,8 @@ public static class Mapper
             Sentiment = section.Sentiment,
             HoursWorked = section.HoursWorked,
             IsVirtual = section.IsVirtual,
+            EnrolledCount = section.EnrolledCount,
+            RespondentCount = section.RespondentCount,
             ChartData = section.ChartData,
             Instructors = section.Instructors.Select(i => new InstructorModel
             {

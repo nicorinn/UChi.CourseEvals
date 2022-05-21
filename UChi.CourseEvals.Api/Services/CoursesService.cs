@@ -60,10 +60,17 @@ public class CoursesService : ICoursesService
         return courseNumber.Course;
     }
 
-    // TODO Improve search
     public async Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString)
     {
-        return new List<CourseModel>();
+        var lowerQuery = queryString.ToLower();
+        var courses = await _dbContext.Courses
+            .Include(c => c.CourseNumbers)
+            .Where(c =>
+                c.Title.ToLower().Contains(lowerQuery)
+                || c.CourseNumbers.Any(cn =>
+                    (cn.Department + " " + cn.Number).ToLower().Contains(lowerQuery))
+            ).ToListAsync();
+        return courses.ConvertAll(Mapper.CourseToCourseModel);
     }
 
     public async Task<Course> AddCourse(NewSectionModel sectionModel)

@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UChi.CourseEvals.Api.Mapping;
 using UChi.CourseEvals.Api.Models;
@@ -30,6 +31,15 @@ public class InstructorService : IInstructorService
     {
         return await _dbContext.Instructors
             .FirstOrDefaultAsync(i => i.Name == name);
+    }
+
+    public async Task<IEnumerable<InstructorModel?>> SearchInstructors(string query)
+    {
+        var instructors = await _dbContext.Instructors
+            .Where(i => 
+                i.Name.ToLower().Contains(query.ToLower()))
+            .ToListAsync();
+        return instructors.ConvertAll(Mapper.InstructorToInstructorModel);
     }
 
     public async Task<Instructor> AddInstructor(string name)
