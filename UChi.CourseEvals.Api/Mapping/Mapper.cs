@@ -1,8 +1,8 @@
 using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Domain.Entities;
 using UChi.CourseEvals.Domain.Enums;
-
 namespace UChi.CourseEvals.Api.Mapping;
+using System.Text.Json;
 
 public static class Mapper
 {
@@ -18,7 +18,7 @@ public static class Mapper
             EnrolledCount = sectionModel.EnrolledCount,
             RespondentCount = sectionModel.RespondentCount,
             IsVirtual = sectionModel.IsVirtual,
-            ChartData = sectionModel.ChartData
+            ChartData = JsonSerializer.Serialize(sectionModel.ChartData)
         };
         return section;
     }
@@ -88,6 +88,7 @@ public static class Mapper
             "Autumn" => Quarter.Autumn,
             "Winter" => Quarter.Winter,
             "Spring" => Quarter.Spring,
+            "Summer" => Quarter.Summer,
             _ => throw new Exception("Invalid quarter")
         };
     }
@@ -99,6 +100,7 @@ public static class Mapper
             Quarter.Autumn => "Autumn",
             Quarter.Winter => "Winter",
             Quarter.Spring => "Spring",
+            Quarter.Summer => "Summer",
             _ => throw new ArgumentOutOfRangeException(nameof(quarter), quarter, null)
         };
     }

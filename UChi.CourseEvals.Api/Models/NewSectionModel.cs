@@ -10,11 +10,10 @@ public class NewSectionModel
         Instructors = new List<string>();
         CourseNumbers = new List<string>();
     }
-    
     public int Number { get; set; }
     public int Year { get; set; }
     public string Quarter { get; set; } = string.Empty;
-    public string? ChartData { get; set; }
+    public object ChartData { get; set; }
     public double Sentiment { get; set; }
     [BindProperty(Name = "hours_worked")]
     public int? HoursWorked { get; set; }

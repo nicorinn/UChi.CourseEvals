@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICoursesService, CoursesService>();
 builder.Services.AddScoped<ISectionsService, SectionsService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
+builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
 
 var app = builder.Build();
 

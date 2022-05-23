@@ -21,6 +21,7 @@ public class InstructorService : IInstructorService
     public async Task<InstructorModel?> FindById(int id)
     {
         var instructor = await _dbContext.Instructors
+            .Include(i => i.Sections)
             .FirstOrDefaultAsync(i => i.Id == id);
 
         return instructor == null ? 
@@ -36,6 +37,7 @@ public class InstructorService : IInstructorService
     public async Task<IEnumerable<InstructorModel?>> SearchInstructors(string query)
     {
         var instructors = await _dbContext.Instructors
+            .Include(i => i.Sections)
             .Where(i => 
                 i.Name.ToLower().Contains(query.ToLower()))
             .ToListAsync();

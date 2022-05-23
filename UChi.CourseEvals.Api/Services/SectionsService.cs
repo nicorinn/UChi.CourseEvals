@@ -4,6 +4,7 @@ using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Api.Services.Interfaces;
 using UChi.CourseEvals.Data;
 using UChi.CourseEvals.Domain.Entities;
+using UChi.CourseEvals.Domain.Enums;
 
 namespace UChi.CourseEvals.Api.Services;
 
@@ -45,7 +46,7 @@ public class SectionsService : ISectionsService
 
         if (SectionAlreadyExists(newSection, course))
         {
-            throw new Exception("Section already exists.");
+            return null;
         }
         
         await AddInstructorsToSection(newSection, sectionModel.Instructors);

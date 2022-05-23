@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Api.Services.Interfaces;
+using UChi.CourseEvals.Domain.Enums;
 
 namespace UChi.CourseEvals.Api.Controllers;
 
@@ -9,10 +10,13 @@ namespace UChi.CourseEvals.Api.Controllers;
 public class SectionsController : ControllerBase
 {
     private readonly ISectionsService _sectionsService;
+    private readonly IApiKeyService _apiKeyService;
 
-    public SectionsController(ISectionsService sectionsService)
+    public SectionsController(ISectionsService sectionsService,
+        IApiKeyService apiKeyService)
     {
         _sectionsService = sectionsService;
+        _apiKeyService = apiKeyService;
     }
     
     [HttpGet("{id:int}")]
@@ -28,14 +32,20 @@ public class SectionsController : ControllerBase
     }
 
     [HttpPost(Name = "section")]
-    public async Task<IActionResult> Section([FromBody] NewSectionModel sectionModel)
+    public async Task<IActionResult> Section([FromBody] SaveSectionDTO data)
     {
-        var newSection = await _sectionsService.AddSection(sectionModel);
+        var apiKeyValid = await _apiKeyService
+            .IsApiKeyValid(data.ApiKey, ApiKeyScope.Write);
+        if (!apiKeyValid)
+        {
+            return Unauthorized(new { message = "Invalid API key"});
+        }
+        var newSection = await _sectionsService.AddSection(data.Section);
         if (newSection == null)
         {
             return BadRequest();
         }
-
-        return Ok(sectionModel);
+        await _apiKeyService.TrackApiKeyRequest(data.ApiKey);
+        return Ok(newSection);
     }
 }

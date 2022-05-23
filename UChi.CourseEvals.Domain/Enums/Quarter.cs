@@ -6,7 +6,8 @@ public enum Quarter
 {
     Autumn,
     Winter,
-    Spring
+    Spring,
+    Summer
 }
 
 public enum ApiKeyScope
