@@ -16,7 +16,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
-            .UseNpgsql("Host=localhost;Database=uchi_evals;Username=uchi_evals_server;Include Error Detail=true")
+            .UseNpgsql()
             .UseSnakeCaseNamingConvention();
 
     public DbSet<Course> Courses { get; set; }
