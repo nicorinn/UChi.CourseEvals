@@ -39,7 +39,7 @@ public class ApiKeyService : IApiKeyService
         
         if (dbKey != null)
         {
-            dbKey.LastUsed = new DateTime();
+            dbKey.LastUsed = DateTime.Now;
             dbKey.RequestCount++;
         }
 
