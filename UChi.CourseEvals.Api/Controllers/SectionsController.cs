@@ -5,7 +5,7 @@ using UChi.CourseEvals.Domain.Enums;
 
 namespace UChi.CourseEvals.Api.Controllers;
 
-[Route("api/[controller]/")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class SectionsController : ControllerBase
 {

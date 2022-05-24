@@ -18,5 +18,5 @@ public interface ICoursesService
 
     public Task UpdateCourseTitleIfMoreRecent(Course course, int year, Quarter quarter, string newTitle);
 
-    // public Task GetCourseStats(int courseId);
+    public Task<StatsModel> GetCourseStats(int courseId);
 }

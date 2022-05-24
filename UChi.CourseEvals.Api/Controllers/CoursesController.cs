@@ -3,18 +3,15 @@ using UChi.CourseEvals.Api.Services.Interfaces;
 
 namespace UChi.CourseEvals.Api.Controllers;
 
-[Route("api/[controller]/")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class CoursesController : ControllerBase
 {
     private readonly ICoursesService _coursesService;
-    private readonly IInstructorService _instructorService;
 
-    public CoursesController(ICoursesService coursesService, 
-        IInstructorService instructorService)
+    public CoursesController(ICoursesService coursesService)
     {
         _coursesService = coursesService;
-        _instructorService = instructorService;
     }
     
     [HttpGet("{id:int}")]
@@ -26,5 +23,12 @@ public class CoursesController : ControllerBase
             return NotFound();
         }
         return Ok(course);
+    }
+    
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Stats(int id)
+    {
+        var model = await _coursesService.GetCourseStats(id);
+        return Ok(model);
     }
 }

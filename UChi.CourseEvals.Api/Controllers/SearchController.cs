@@ -8,7 +8,7 @@ using UChi.CourseEvals.Api.Services.Interfaces;
 
 namespace UChi.CourseEvals.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class SearchController : ControllerBase
     {

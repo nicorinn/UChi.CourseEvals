@@ -12,4 +12,6 @@ public interface IInstructorService
     public Task<IEnumerable<InstructorModel?>> SearchInstructors(string query);
 
     public Task<Instructor> AddInstructor(string name);
+
+    public Task<StatsModel> GetInstructorStats(int instructorId);
 }

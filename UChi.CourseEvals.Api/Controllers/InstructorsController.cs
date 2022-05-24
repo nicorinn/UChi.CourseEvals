@@ -8,7 +8,7 @@ using UChi.CourseEvals.Api.Services.Interfaces;
 
 namespace UChi.CourseEvals.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class InstructorsController : ControllerBase
     {
@@ -28,6 +28,13 @@ namespace UChi.CourseEvals.Api.Controllers
                 return NotFound();
             }
             return Ok(instructor);
+        }
+        
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Stats(int id)
+        {
+            var model = await _instructorService.GetInstructorStats(id);
+            return Ok(model);
         }
     }
 }
