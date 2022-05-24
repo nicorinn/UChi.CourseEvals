@@ -15,9 +15,7 @@ public class AppDbContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
-            .UseNpgsql()
-            .UseSnakeCaseNamingConvention();
+        => optionsBuilder.UseSnakeCaseNamingConvention();
 
     public DbSet<Course> Courses { get; set; }
     public DbSet<Section> Sections { get; set; }

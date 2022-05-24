@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using UChi.CourseEvals.Api.Services;
 using UChi.CourseEvals.Api.Services.Interfaces;
@@ -31,6 +32,11 @@ builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
 
 var app = builder.Build();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
