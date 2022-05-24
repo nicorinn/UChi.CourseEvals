@@ -33,6 +33,8 @@ public class SectionsService : ISectionsService
 
     public async Task<Section?> AddSection(NewSectionModel sectionModel)
     {
+        var newSection = Mapper.NewSectionModelToSection(sectionModel);
+        
         var course = await _coursesService
             .FindByCourseNumber(sectionModel.CourseNumbers.First());
 
@@ -40,8 +42,13 @@ public class SectionsService : ISectionsService
         {
            course = await _coursesService.AddCourse(sectionModel);
         }
+        else
+        {
+            // Only check if course title needs to be updated when the course already exists
+            await _coursesService.UpdateCourseTitleIfMoreRecent(course, newSection.Year, newSection.Quarter,
+                sectionModel.Title);
+        }
 
-        var newSection = Mapper.NewSectionModelToSection(sectionModel);
         newSection.CourseId = course.Id;
 
         if (SectionAlreadyExists(newSection, course))
@@ -50,6 +57,8 @@ public class SectionsService : ISectionsService
         }
         
         await AddInstructorsToSection(newSection, sectionModel.Instructors);
+        
+        
         _dbContext.Add(newSection);
 
         await _dbContext.SaveChangesAsync();

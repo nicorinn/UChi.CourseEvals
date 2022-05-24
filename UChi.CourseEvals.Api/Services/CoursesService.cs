@@ -6,6 +6,7 @@ using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Api.Services.Interfaces;
 using UChi.CourseEvals.Data;
 using UChi.CourseEvals.Domain.Entities;
+using UChi.CourseEvals.Domain.Enums;
 
 namespace UChi.CourseEvals.Api.Services;
 
@@ -89,6 +90,19 @@ public class CoursesService : ICoursesService
         _dbContext.Courses.Add(course);
         await _dbContext.SaveChangesAsync();
         return course;
+    }
+
+    public async Task UpdateCourseTitleIfMoreRecent(Course course, int year, Quarter quarter, string newTitle)
+    {
+        var hasNewerSection = course.Sections
+            .Any(s => s.Year >= year && s.Quarter > quarter);
+
+        if (!hasNewerSection)
+        {
+            course.Title = newTitle;
+        }
+
+        await _dbContext.SaveChangesAsync();
     }
 
     private async Task<CourseNumber?> FindCourseNumberByString(string courseNumberString)
