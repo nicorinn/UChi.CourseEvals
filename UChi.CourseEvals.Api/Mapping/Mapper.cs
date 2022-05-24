@@ -14,11 +14,15 @@ public static class Mapper
             Quarter = StringToQuarter(sectionModel.Quarter),
             Year = sectionModel.Year,
             Sentiment = sectionModel.Sentiment,
-            HoursWorked = sectionModel.HoursWorked,
             EnrolledCount = sectionModel.EnrolledCount,
             RespondentCount = sectionModel.RespondentCount,
             IsVirtual = sectionModel.IsVirtual,
-            ChartData = JsonSerializer.Serialize(sectionModel.ChartData)
+            HoursWorked = sectionModel.HoursWorked,
+            EvaluatedFairly = sectionModel.EvaluatedFairly,
+            UsefulFeedback = sectionModel.UsefulFeedback,
+            StandardsForSuccess = sectionModel.StandardsForSuccess,
+            HelpfulOutsideOfClass = sectionModel.HelpfulOutsideOfClass,
+            Keywords = JsonSerializer.Serialize(sectionModel.Keywords)
         };
         return section;
     }
@@ -36,7 +40,11 @@ public static class Mapper
             IsVirtual = section.IsVirtual,
             EnrolledCount = section.EnrolledCount,
             RespondentCount = section.RespondentCount,
-            ChartData = section.ChartData,
+            Keywords = JsonSerializer.Deserialize<List<KeywordModel>>(section.Keywords),
+            EvaluatedFairly = section.EvaluatedFairly,
+            UsefulFeedback = section.UsefulFeedback,
+            StandardsForSuccess = section.StandardsForSuccess,
+            HelpfulOutsideOfClass = section.HelpfulOutsideOfClass,
             Instructors = section.Instructors.Select(i => new InstructorModel
             {
                 Id = i.Id,
@@ -69,16 +77,6 @@ public static class Mapper
         };
 
         return instructorModel;
-    }
-
-    public static Instructor InstructorToInstructorModel(InstructorModel instructorModel)
-    {
-        var instructor = new Instructor
-        {
-            Name = instructorModel.Name,
-        };
-
-        return instructor;
     }
 
     private static Quarter StringToQuarter(string quarterString)

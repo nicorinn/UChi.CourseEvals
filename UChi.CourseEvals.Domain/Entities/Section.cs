@@ -17,12 +17,16 @@ public class Section : BaseEntity
     public int Year { get; set; }
     public Quarter Quarter { get; set; }
     [Column(TypeName = "jsonb")]
-    public string? ChartData { get; set; }
+    public string Keywords { get; set; }
     public double Sentiment { get; set; }
     public int EnrolledCount { get; set; }
     public int RespondentCount { get; set; }
-    public int? HoursWorked { get; set; }
     public bool IsVirtual { get; set; }
+    public int? HoursWorked { get; set; }
+    public double? UsefulFeedback { get; set; }
+    public double? EvaluatedFairly { get; set; }
+    public double? StandardsForSuccess { get; set; }
+    public double? HelpfulOutsideOfClass { get; set; }
 
     public Course? Course { get; set; }
     public ICollection<Instructor> Instructors { get; set; }
