@@ -32,6 +32,7 @@ public static class Mapper
         var sectionModel = new SectionModel
         {
             Id = section.Id,
+            CourseId = section.CourseId,
             Number = section.Number,
             Quarter = QuarterToString(section.Quarter),
             Year = section.Year,

@@ -11,6 +11,7 @@ public class SectionModel
     }
     
     public int Id { get; set; }
+    public int CourseId { get; set; }
     public int Number { get; set; }
     public int Year { get; set; }
     public string? Quarter { get; set; }

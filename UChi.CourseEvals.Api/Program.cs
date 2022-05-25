@@ -13,9 +13,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy => { policy.WithOrigins("http://localhost:3000", 
+            "https://uofcourses.com", "https://wwww.uofcourses.com"); });
+});
+
 builder.Services.AddControllers()
     .AddJsonOptions(o =>
-    { 
+    {
         o.JsonSerializerOptions
             .ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
@@ -46,6 +53,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
