@@ -25,5 +25,6 @@ public class SectionModel
     public double? EvaluatedFairly { get; set; }
     public double? StandardsForSuccess { get; set; }
     public double? HelpfulOutsideOfClass { get; set; }
+    public string? CourseTitle { get; set; } = string.Empty;
     public ICollection<InstructorModel> Instructors { get; set; }
 }

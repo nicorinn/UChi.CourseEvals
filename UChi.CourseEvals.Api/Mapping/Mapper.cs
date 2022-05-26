@@ -46,6 +46,7 @@ public static class Mapper
             UsefulFeedback = section.UsefulFeedback,
             StandardsForSuccess = section.StandardsForSuccess,
             HelpfulOutsideOfClass = section.HelpfulOutsideOfClass,
+            CourseTitle = section.Course?.Title,
             Instructors = section.Instructors.Select(i => new InstructorModel
             {
                 Id = i.Id,
