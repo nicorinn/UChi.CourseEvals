@@ -26,12 +26,16 @@ public class CoursesService : ICoursesService
             .Include(c => c.Sections)
             .ThenInclude(s => s.Instructors)
             .FirstOrDefaultAsync(c => c.Id == id);
-        if (course == null)
+        
+        if (course != null)
         {
-            return null;
+            course.Sections = course.Sections
+                .OrderByDescending(s => s.Year)
+                .ThenByDescending(s => s.Quarter)
+                .ToList();
         }
 
-        return Mapper.CourseToCourseModel(course);
+        return course == null ? null : Mapper.CourseToCourseModel(course);
     }
 
     public async Task<CourseModel?> FindCourseAndSectionsByNumber(string courseNumber)

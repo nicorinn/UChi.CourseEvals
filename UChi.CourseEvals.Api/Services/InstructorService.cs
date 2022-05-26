@@ -25,6 +25,15 @@ public class InstructorService : IInstructorService
             .ThenInclude(s => s.Course)
             .FirstOrDefaultAsync(i => i.Id == id);
 
+        if (instructor != null)
+        {
+            instructor.Sections = instructor.Sections
+                .OrderBy(s => s.Course?.Title)
+                .ThenByDescending(s => s.Year)
+                .ThenByDescending(s => s.Quarter)
+                .ToList();
+        }
+
         return instructor == null ? 
             null : Mapper.InstructorToInstructorModel(instructor);
     }
