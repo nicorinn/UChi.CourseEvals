@@ -16,8 +16,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-        policy => { policy.WithOrigins("http://localhost:3000", 
-            "https://uofcourses.com", "https://wwww.uofcourses.com"); });
+        policy => policy
+            .SetIsOriginAllowedToAllowWildcardSubdomains()
+            .WithOrigins("http://localhost:3000",
+                "https://uofcourses.com", "https://*.uofcourses.com"));
 });
 
 builder.Services.AddControllers()
