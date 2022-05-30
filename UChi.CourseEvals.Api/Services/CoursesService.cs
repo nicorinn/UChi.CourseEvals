@@ -53,7 +53,6 @@ public class CoursesService : ICoursesService
         return Mapper.CourseToCourseModel(course);
     }
 
-    // TODO Investigate whether to query by coursenumber first
     public async Task<Course?> FindByCourseNumber(string courseNumberString)
     {
         var courseNumber = await FindCourseNumberByString(courseNumberString);
@@ -65,7 +64,7 @@ public class CoursesService : ICoursesService
         return courseNumber.Course;
     }
 
-    public async Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString)
+    public async Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString, int page, int pageSize)
     {
         var lowerQuery = queryString.ToLower();
         var courses = await _dbContext.Courses
@@ -74,8 +73,26 @@ public class CoursesService : ICoursesService
                 c.Title.ToLower().Contains(lowerQuery)
                 || c.CourseNumbers.Any(cn =>
                     (cn.Department + " " + cn.Number).ToLower().Contains(lowerQuery))
-            ).ToListAsync();
+            )
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
         return courses.ConvertAll(Mapper.CourseToCourseModel);
+    }
+
+    public async Task<int> GetCoursesSearchResultsLength(string queryString)
+    {
+        var lowerQuery = queryString.ToLower();
+        var count = await _dbContext.Courses
+            .Include(c => c.CourseNumbers)
+            .Where(c =>
+                c.Title.ToLower().Contains(lowerQuery)
+                || c.CourseNumbers.Any(cn =>
+                    (cn.Department + " " + cn.Number).ToLower().Contains(lowerQuery))
+            )
+            .CountAsync();
+
+        return count;
     }
 
     public async Task<Course> AddCourse(NewSectionModel sectionModel)

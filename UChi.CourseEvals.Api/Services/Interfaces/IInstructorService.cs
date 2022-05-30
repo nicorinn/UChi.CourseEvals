@@ -9,7 +9,9 @@ public interface IInstructorService
 
     public Task<Instructor?> FindByName(string name);
 
-    public Task<IEnumerable<InstructorModel?>> SearchInstructors(string query);
+    public Task<IEnumerable<InstructorModel>> SearchInstructors(string queryString, int page, int pageSize);
+    
+    public Task<int> GetInstructorsSearchResultsLength(string queryString);
 
     public Task<Instructor> AddInstructor(string name);
 

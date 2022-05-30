@@ -44,13 +44,24 @@ public class InstructorService : IInstructorService
             .FirstOrDefaultAsync(i => i.Name == name);
     }
 
-    public async Task<IEnumerable<InstructorModel?>> SearchInstructors(string query)
+    public async Task<IEnumerable<InstructorModel>> SearchInstructors(string queryString, int page, int pageSize)
     {
         var instructors = await _dbContext.Instructors
             .Where(i => 
-                i.Name.ToLower().Contains(query.ToLower()))
+                i.Name.ToLower().Contains(queryString.ToLower()))
+            .Skip(page * pageSize)
+            .Take(pageSize)
             .ToListAsync();
         return instructors.ConvertAll(Mapper.InstructorToInstructorModel);
+    }
+
+    public async Task<int> GetInstructorsSearchResultsLength(string queryString)
+    {
+        var count = await _dbContext.Instructors
+            .Where(i =>
+                i.Name.ToLower().Contains(queryString.ToLower()))
+            .CountAsync();
+        return count;
     }
 
     public async Task<Instructor> AddInstructor(string name)

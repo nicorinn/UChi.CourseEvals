@@ -12,7 +12,9 @@ public interface ICoursesService
 
     public Task<Course?> FindByCourseNumber(string courseNumber);
     
-    public Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString);
+    public Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString, int page, int pageSize);
+    
+    public Task<int> GetCoursesSearchResultsLength(string queryString);
 
     public Task<Course> AddCourse(NewSectionModel sectionModel);
 
