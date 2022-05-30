@@ -31,4 +31,17 @@ public class CoursesController : ControllerBase
         var model = await _coursesService.GetCourseStats(id);
         return Ok(model);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> Search([FromQuery]string queryString, [FromQuery]int page, 
+        [FromQuery]int pageSize)
+    {
+        var courses = await _coursesService
+            .SearchByQueryString(queryString, page, pageSize);
+        var response = new {
+            Courses = courses,
+            Count = await _coursesService.GetCourseSearchResultsLength(queryString),
+        };
+        return Ok(response);
+    }
 }

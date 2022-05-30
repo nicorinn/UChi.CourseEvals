@@ -14,7 +14,7 @@ public interface ICoursesService
     
     public Task<IEnumerable<CourseModel>> SearchByQueryString(string queryString, int page, int pageSize);
     
-    public Task<int> GetCoursesSearchResultsLength(string queryString);
+    public Task<int> GetCourseSearchResultsLength(string queryString);
 
     public Task<Course> AddCourse(NewSectionModel sectionModel);
 

@@ -80,7 +80,7 @@ public class CoursesService : ICoursesService
         return courses.ConvertAll(Mapper.CourseToCourseModel);
     }
 
-    public async Task<int> GetCoursesSearchResultsLength(string queryString)
+    public async Task<int> GetCourseSearchResultsLength(string queryString)
     {
         var lowerQuery = queryString.ToLower();
         var count = await _dbContext.Courses

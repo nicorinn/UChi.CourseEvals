@@ -36,5 +36,19 @@ namespace UChi.CourseEvals.Api.Controllers
             var model = await _instructorService.GetInstructorStats(id);
             return Ok(model);
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> Search([FromQuery]string queryString, [FromQuery]int page, 
+            [FromQuery]int pageSize)
+        {
+            var instructors = await _instructorService
+                .SearchInstructors(queryString, page, pageSize);
+            var response = new
+            {
+                Instructors = instructors,
+                Count = await _instructorService.GetInstructorSearchResultsLength(queryString)
+            };
+            return Ok(response);
+        }
     }
 }

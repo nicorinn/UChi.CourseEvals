@@ -55,7 +55,7 @@ public class InstructorService : IInstructorService
         return instructors.ConvertAll(Mapper.InstructorToInstructorModel);
     }
 
-    public async Task<int> GetInstructorsSearchResultsLength(string queryString)
+    public async Task<int> GetInstructorSearchResultsLength(string queryString)
     {
         var count = await _dbContext.Instructors
             .Where(i =>
