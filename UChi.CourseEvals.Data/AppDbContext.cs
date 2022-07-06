@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UChi.CourseEvals.Domain.Entities;
-using UChi.CourseEvals.Domain.Enums;
 
 namespace UChi.CourseEvals.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : DbContext, IAppDbContext
 {
     public AppDbContext()
     {

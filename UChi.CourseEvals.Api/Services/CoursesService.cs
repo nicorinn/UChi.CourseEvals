@@ -12,9 +12,9 @@ namespace UChi.CourseEvals.Api.Services;
 
 public class CoursesService : ICoursesService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IAppDbContext _dbContext;
 
-    public CoursesService(AppDbContext dbContext)
+    public CoursesService(IAppDbContext dbContext)
     {
         _dbContext = dbContext;
     }

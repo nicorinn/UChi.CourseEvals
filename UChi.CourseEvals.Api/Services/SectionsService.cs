@@ -10,11 +10,11 @@ namespace UChi.CourseEvals.Api.Services;
 
 public class SectionsService : ISectionsService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IAppDbContext _dbContext;
     private readonly ICoursesService _coursesService;
     private readonly IInstructorService _instructorService;
 
-    public SectionsService(AppDbContext dbContext, 
+    public SectionsService(IAppDbContext dbContext, 
         ICoursesService coursesService,
         IInstructorService instructorService)
     {
@@ -59,7 +59,7 @@ public class SectionsService : ISectionsService
         await AddInstructorsToSection(newSection, sectionModel.Instructors);
         
         
-        _dbContext.Add(newSection);
+        _dbContext.Sections.Add(newSection);
 
         await _dbContext.SaveChangesAsync();
         return newSection;

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UChi.CourseEvals.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UChi.CourseEvals.Data", "UChi.CourseEvals.Data\UChi.CourseEvals.Data.csproj", "{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UChi.CourseEvals.Api.Test", "UChi.CourseEvals.Api.Test\UChi.CourseEvals.Api.Test.csproj", "{9932281D-D715-4BB0-B005-16DE7A1112ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD9980EB-70CA-42A2-A59A-49D4800DCDA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9932281D-D715-4BB0-B005-16DE7A1112ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9932281D-D715-4BB0-B005-16DE7A1112ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9932281D-D715-4BB0-B005-16DE7A1112ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9932281D-D715-4BB0-B005-16DE7A1112ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -7,9 +7,9 @@ namespace UChi.CourseEvals.Api.Services;
 
 public class ApiKeyService : IApiKeyService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IAppDbContext _dbContext;
 
-    public ApiKeyService(AppDbContext dbContext)
+    public ApiKeyService(IAppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -19,7 +19,7 @@ public class ApiKeyService : IApiKeyService
         var dbKey = await _dbContext.ApiKeys
             .FirstOrDefaultAsync(k => k.Key == apiKey);
 
-        return dbKey != null && dbKey.ExpirationDate >= new DateTime();
+        return dbKey != null && dbKey.ExpirationDate >= DateTime.Now;
     }
     
     public async Task<bool> IsApiKeyValid(string apiKey, ApiKeyScope scope)

@@ -1,4 +1,3 @@
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UChi.CourseEvals.Api.Mapping;
 using UChi.CourseEvals.Api.Models;
@@ -10,9 +9,9 @@ namespace UChi.CourseEvals.Api.Services;
 
 public class InstructorService : IInstructorService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IAppDbContext _dbContext;
 
-    public InstructorService(AppDbContext dbContext)
+    public InstructorService(IAppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
