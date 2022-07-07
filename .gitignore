@@ -6,3 +6,4 @@ riderModule.iml
 .idea/
 **/appsettings.*.json
 .DS_Store
+/UChi.CourseEvals.sln.DotSettings.user

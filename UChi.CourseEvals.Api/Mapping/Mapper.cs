@@ -1,8 +1,9 @@
+using System.Text.Json;
 using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Domain.Entities;
 using UChi.CourseEvals.Domain.Enums;
+
 namespace UChi.CourseEvals.Api.Mapping;
-using System.Text.Json;
 
 public static class Mapper
 {

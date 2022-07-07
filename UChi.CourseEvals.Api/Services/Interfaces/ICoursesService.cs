@@ -18,7 +18,7 @@ public interface ICoursesService
 
     public Task<Course> AddCourse(NewSectionModel sectionModel);
 
-    public Task UpdateCourseTitleIfMoreRecent(Course course, int year, Quarter quarter, string newTitle);
+    public Task UpdateCourseTitleToMostRecent(int courseId, int year, Quarter quarter, string newTitle);
 
     public Task<StatsModel> GetCourseStats(int courseId);
 }

@@ -1,21 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using UChi.CourseEvals.Api.Services;
 using UChi.CourseEvals.Data;
 using UChi.CourseEvals.Domain.Entities;
 using UChi.CourseEvals.Domain.Enums;
-using Microsoft.EntityFrameworkCore.InMemory;
 using Xunit;
 
 namespace UChi.CourseEvals.Api.Test.Services;
 
-public class DatabaseFixture : IDisposable
+public class ApiKeyDatabaseFixture : IDisposable
 {
-    public DatabaseFixture()
+    public ApiKeyDatabaseFixture()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase("TestAppDatabase")
@@ -65,15 +61,14 @@ public class DatabaseFixture : IDisposable
     public AppDbContext DbContext { get; set; }
 }
  
-public class ApiKeyServiceTest : IClassFixture<DatabaseFixture>
+public class ApiKeyServiceTest : IClassFixture<ApiKeyDatabaseFixture>
 {
-    private readonly DatabaseFixture _fixture;
+    private readonly ApiKeyDatabaseFixture _fixture;
 
-    public ApiKeyServiceTest(DatabaseFixture fixture)
+    public ApiKeyServiceTest(ApiKeyDatabaseFixture fixture)
     {
         _fixture = fixture;
     }
-
 
     [Fact]
     public async Task AcceptsValidApiKey()

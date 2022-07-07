@@ -4,7 +4,6 @@ using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Api.Services.Interfaces;
 using UChi.CourseEvals.Data;
 using UChi.CourseEvals.Domain.Entities;
-using UChi.CourseEvals.Domain.Enums;
 
 namespace UChi.CourseEvals.Api.Services;
 
@@ -40,22 +39,22 @@ public class SectionsService : ISectionsService
 
         if (course == null)
         {
-           course = await _coursesService.AddCourse(sectionModel);
+           var newCourse = await _coursesService.AddCourse(sectionModel);
+           newSection.CourseId = newCourse.Id;
         }
         else
         {
             // Only check if course title needs to be updated when the course already exists
-            await _coursesService.UpdateCourseTitleIfMoreRecent(course, newSection.Year, newSection.Quarter,
+            await _coursesService.UpdateCourseTitleToMostRecent(course.Id, newSection.Year, newSection.Quarter,
                 sectionModel.Title);
+            newSection.CourseId = course.Id;
+            // Section doesn't already exist if course doesn't already exist
+            if (SectionAlreadyExists(newSection, course))
+            {
+                return null;
+            }
         }
 
-        newSection.CourseId = course.Id;
-
-        if (SectionAlreadyExists(newSection, course))
-        {
-            return null;
-        }
-        
         await AddInstructorsToSection(newSection, sectionModel.Instructors);
         
         

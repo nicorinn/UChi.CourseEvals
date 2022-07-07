@@ -1,6 +1,4 @@
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging;
 using UChi.CourseEvals.Api.Mapping;
 using UChi.CourseEvals.Api.Models;
 using UChi.CourseEvals.Api.Services.Interfaces;
@@ -26,7 +24,7 @@ public class CoursesService : ICoursesService
             .Include(c => c.Sections)
             .ThenInclude(s => s.Instructors)
             .FirstOrDefaultAsync(c => c.Id == id);
-        
+
         if (course != null)
         {
             course.Sections = course.Sections
@@ -45,6 +43,7 @@ public class CoursesService : ICoursesService
         {
             return null;
         }
+
         course.Sections = await _dbContext.Sections
             .Include(s => s.Instructors)
             .Where(s => s.CourseId == course.Id)
@@ -103,7 +102,7 @@ public class CoursesService : ICoursesService
             Title = sectionModel.Title,
             CourseNumbers = new List<CourseNumber>()
         };
-        
+
         course.CourseNumbers = sectionModel.CourseNumbers
             .Select(courseNumberString => new CourseNumber(courseNumberString))
             .ToList();
@@ -113,10 +112,19 @@ public class CoursesService : ICoursesService
         return course;
     }
 
-    public async Task UpdateCourseTitleIfMoreRecent(Course course, int year, Quarter quarter, string newTitle)
+    public async Task UpdateCourseTitleToMostRecent(int courseId, int year, Quarter quarter, string newTitle)
     {
+        var course = await _dbContext.Courses
+            .Include(c => c.Sections)
+            .FirstOrDefaultAsync(c => c.Id == courseId);
+        
+        if (course == null)
+        {
+            throw new ApplicationException("Course does not exist");
+        }
+        
         var hasNewerSection = course.Sections
-            .Any(s => s.Year >= year && s.Quarter > quarter);
+            .Any(s => s.Year > year || (s.Year == year && s.Quarter > quarter));
 
         if (!hasNewerSection)
         {
@@ -138,19 +146,19 @@ public class CoursesService : ICoursesService
         var averageHours = course.Sections
             .Where(s => s.HoursWorked != null)
             .Average(s => s.HoursWorked);
-        
+
         var usefulFeedback = course.Sections
             .Where(s => s.UsefulFeedback != null)
             .Average(s => s.UsefulFeedback);
-        
+
         var evaluateFairly = course.Sections
             .Where(s => s.EvaluatedFairly != null)
             .Average(s => s.EvaluatedFairly);
-        
+
         var standardForSuccess = course.Sections
             .Where(s => s.StandardsForSuccess != null)
             .Average(s => s.StandardsForSuccess);
-        
+
         var helpfulOutsideOfClass = course.Sections
             .Where(s => s.HelpfulOutsideOfClass != null)
             .Average(s => s.HelpfulOutsideOfClass);
@@ -167,7 +175,7 @@ public class CoursesService : ICoursesService
             StandardsForSuccess = standardForSuccess,
             HelpfulOutsideOfClass = helpfulOutsideOfClass
         };
-        
+
         return model;
     }
 
@@ -179,12 +187,13 @@ public class CoursesService : ICoursesService
         {
             throw new ArgumentException("CourseNumber must contain department and number separated by a space.");
         }
+
         string department = splitCourseNumber[0];
         int number = int.Parse(splitCourseNumber[1]);
         var courseNumber = await _dbContext.CourseNumbers
             .Include(cn => cn.Course)
             .ThenInclude(c => c.Sections)
-            .FirstOrDefaultAsync(cn => 
+            .FirstOrDefaultAsync(cn =>
                 cn.Department == department && cn.Number == number);
         return courseNumber;
     }
