@@ -13,7 +13,7 @@ public class SectionsService : ISectionsService
     private readonly ICoursesService _coursesService;
     private readonly IInstructorService _instructorService;
 
-    public SectionsService(IAppDbContext dbContext, 
+    public SectionsService(IAppDbContext dbContext,
         ICoursesService coursesService,
         IInstructorService instructorService)
     {
@@ -33,14 +33,14 @@ public class SectionsService : ISectionsService
     public async Task<Section?> AddSection(NewSectionModel sectionModel)
     {
         var newSection = Mapper.NewSectionModelToSection(sectionModel);
-        
+
         var course = await _coursesService
             .FindByCourseNumber(sectionModel.CourseNumbers.First());
 
         if (course == null)
         {
-           var newCourse = await _coursesService.AddCourse(sectionModel);
-           newSection.CourseId = newCourse.Id;
+            var newCourse = await _coursesService.AddCourse(sectionModel);
+            newSection.CourseId = newCourse.Id;
         }
         else
         {
@@ -48,16 +48,19 @@ public class SectionsService : ISectionsService
             await _coursesService.UpdateCourseTitleToMostRecent(course.Id, newSection.Year, newSection.Quarter,
                 sectionModel.Title);
             newSection.CourseId = course.Id;
-            // Section doesn't already exist if course doesn't already exist
-            if (SectionAlreadyExists(newSection, course))
+
+            var existingSection = course.Sections
+                .FirstOrDefault(s => SameSection(s, newSection));
+            // Update the existing section if the 
+            if (existingSection != null)
             {
-                return null;
+                var updatedSection = UpdateSection(existingSection, newSection);
+                await _dbContext.SaveChangesAsync();
+                return updatedSection;
             }
         }
 
         await AddInstructorsToSection(newSection, sectionModel.Instructors);
-        
-        
         _dbContext.Sections.Add(newSection);
 
         await _dbContext.SaveChangesAsync();
@@ -77,15 +80,30 @@ public class SectionsService : ISectionsService
         }
     }
 
+    private Section UpdateSection(Section sectionToUpdate, Section newSection)
+    {
+        // Only update properties that might change, so not number or quarter
+        sectionToUpdate.Keywords = newSection.Keywords;
+        sectionToUpdate.Sentiment = newSection.Sentiment;
+        sectionToUpdate.EnrolledCount = newSection.EnrolledCount;
+        sectionToUpdate.RespondentCount = newSection.RespondentCount;
+        sectionToUpdate.EvaluatedFairly = newSection.EnrolledCount;
+        sectionToUpdate.HoursWorked = newSection.HoursWorked;
+        sectionToUpdate.UsefulFeedback = newSection.UsefulFeedback;
+        sectionToUpdate.StandardsForSuccess = newSection.StandardsForSuccess;
+        sectionToUpdate.HelpfulOutsideOfClass = newSection.EvaluatedFairly;
+        return sectionToUpdate;
+    }
+
     private bool SectionAlreadyExists(Section section, Course course)
     {
         return course.Sections
             .Any(s => SameSection(s, section));
-    } 
+    }
 
     private bool SameSection(Section section1, Section section2)
     {
-        bool sameQuarter = section1.Quarter == section2.Quarter 
+        bool sameQuarter = section1.Quarter == section2.Quarter
                            && section1.Year == section2.Year;
         bool sameNumber = section1.Number == section2.Number;
         bool sameCourse = section1.CourseId == section2.CourseId;
