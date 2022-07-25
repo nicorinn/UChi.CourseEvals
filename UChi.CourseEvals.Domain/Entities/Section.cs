@@ -27,7 +27,7 @@ public class Section : BaseEntity
     public double? EvaluatedFairly { get; set; }
     public double? StandardsForSuccess { get; set; }
     public double? HelpfulOutsideOfClass { get; set; }
-
+    public string? Url { get; set; }
     public Course? Course { get; set; }
     public ICollection<Instructor> Instructors { get; set; }
 }

@@ -16,6 +16,13 @@ public class AppDbContext : DbContext, IAppDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSnakeCaseNamingConvention();
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Section>()
+            .Property(s => s.Keywords)
+            .HasDefaultValue("[]");
+    }
+    
     public DbSet<Course> Courses { get; set; }
     public DbSet<Section> Sections { get; set; }
     public DbSet<Instructor> Instructors { get; set; }

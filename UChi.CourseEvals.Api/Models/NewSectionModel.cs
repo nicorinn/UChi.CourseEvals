@@ -24,6 +24,7 @@ public class NewSectionModel
     public double? StandardsForSuccess { get; set; }
     public double? HelpfulOutsideOfClass { get; set; }
     public int? HoursWorked { get; set; }
+    public string? Url { get; set; } = string.Empty;
     public List<KeywordModel> Keywords { get; set; }
     public ICollection<string> CourseNumbers { get; set; }
     public ICollection<string> Instructors { get; set; }

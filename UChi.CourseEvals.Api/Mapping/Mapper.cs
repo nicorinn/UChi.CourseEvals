@@ -23,6 +23,7 @@ public static class Mapper
             UsefulFeedback = sectionModel.UsefulFeedback,
             StandardsForSuccess = sectionModel.StandardsForSuccess,
             HelpfulOutsideOfClass = sectionModel.HelpfulOutsideOfClass,
+            Url = sectionModel.Url,
             Keywords = JsonSerializer.Serialize(sectionModel.Keywords)
         };
         return section;
@@ -48,6 +49,7 @@ public static class Mapper
             StandardsForSuccess = section.StandardsForSuccess,
             HelpfulOutsideOfClass = section.HelpfulOutsideOfClass,
             CourseTitle = section.Course?.Title,
+            Url = section.Url,
             Instructors = section.Instructors.Select(i => new InstructorModel
             {
                 Id = i.Id,
