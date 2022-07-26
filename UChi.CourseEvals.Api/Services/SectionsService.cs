@@ -92,6 +92,8 @@ public class SectionsService : ISectionsService
         sectionToUpdate.UsefulFeedback = newSection.UsefulFeedback;
         sectionToUpdate.StandardsForSuccess = newSection.StandardsForSuccess;
         sectionToUpdate.HelpfulOutsideOfClass = newSection.EvaluatedFairly;
+        sectionToUpdate.Url = newSection.Url;
+        sectionToUpdate.IsVirtual = newSection.IsVirtual;
         return sectionToUpdate;
     }
 
