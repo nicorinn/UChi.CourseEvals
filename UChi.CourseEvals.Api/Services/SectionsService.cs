@@ -87,7 +87,7 @@ public class SectionsService : ISectionsService
         sectionToUpdate.Sentiment = newSection.Sentiment;
         sectionToUpdate.EnrolledCount = newSection.EnrolledCount;
         sectionToUpdate.RespondentCount = newSection.RespondentCount;
-        sectionToUpdate.EvaluatedFairly = newSection.EnrolledCount;
+        sectionToUpdate.EvaluatedFairly = newSection.EvaluatedFairly;
         sectionToUpdate.HoursWorked = newSection.HoursWorked;
         sectionToUpdate.UsefulFeedback = newSection.UsefulFeedback;
         sectionToUpdate.StandardsForSuccess = newSection.StandardsForSuccess;
