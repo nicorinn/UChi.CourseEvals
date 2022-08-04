@@ -1,4 +1,5 @@
 using UChi.CourseEvals.Api.Models;
+using UChi.CourseEvals.Api.Models.Stats;
 using UChi.CourseEvals.Domain.Entities;
 using UChi.CourseEvals.Domain.Enums;
 
