@@ -49,6 +49,7 @@ public static class Mapper
             StandardsForSuccess = section.StandardsForSuccess,
             HelpfulOutsideOfClass = section.HelpfulOutsideOfClass,
             CourseTitle = section.Course?.Title,
+            CourseNumber = section.Course?.CourseNumbers.First().GetDepartmentAndNumber(),
             Url = section.Url,
             Instructors = section.Instructors.Select(i => new InstructorModel
             {

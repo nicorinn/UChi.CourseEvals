@@ -23,6 +23,7 @@ public class InstructorService : IInstructorService
         var instructor = await _dbContext.Instructors
             .Include(i => i.Sections)
             .ThenInclude(s => s.Course)
+            .ThenInclude(c => c.CourseNumbers)
             .FirstOrDefaultAsync(i => i.Id == id);
 
         if (instructor != null)
